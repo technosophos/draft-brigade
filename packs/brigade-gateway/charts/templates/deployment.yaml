@@ -7,13 +7,17 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+    draft: {{ default "draft-app" .Values.draft }}
 spec:
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
-        app: {{ template "name" . }}
+        app: {{ template "fullname" . }}
         release: {{ .Release.Name }}
+        draft: {{ default "draft-app" .Values.draft }}
+      annotations:
+        buildID: {{ .Values.buildID }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
