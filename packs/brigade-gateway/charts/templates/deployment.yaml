@@ -29,6 +29,20 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: metadata.namespace
+            - name: GATEWAY_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: GATEWAY_IP
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.podIP
+            {{ range $var := .Values.env }}
+            - name: {{ $var.name | quote }}
+              value: {{ $var.value | quote }}
+            {{ end }}
           livenessProbe:
             httpGet:
               path: /healthz

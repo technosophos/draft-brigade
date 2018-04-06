@@ -27,20 +27,40 @@ There are two parts to this app:
 */
 
 // ==== CONFIGURATION ====
-// Configure what values we get from environment variables.
-// To learn more about Convict, go here:
+// Configure what values we get from environment variables. These are
+// passed into the runtime via `chart/templates/deployment.yaml`.
+// To learn more about configuration using Convict, go here:
 //   https://github.com/mozilla/node-convict
 var config = convict({
+    // Example of a custom var. See chart/values.yaml for the definition.
+    exampleVar: {
+        doc: "This is an example. Feel free to delete or replace.",
+        default: "EMPTY",
+        env: "EXAMPLE"
+    },
+
+    // Predefined vars.
     port: {
         doc: "Port number",
         default: 8080,
         format: "port",
         env: "GATEWAY_PORT"
     },
+    ip: {
+        doc: "The pod IP address assigned by Kubernetes",
+        format: "ipaddress",
+        default: "127.0.0.1",
+        env: "GATEWAY_IP"
+    },
     namespace: {
         doc: "The Kubernetes namespace. Usually passed via downward API.",
         default: "default",
         env: "GATEWAY_NAMESPACE"
+    },
+    appName: {
+        doc: "The name of this app, according to Kubernetes",
+        default: "unknown",
+        env: "GATEWAY_NAME"
     }
 });
 config.validate({allowed: 'strict'});
@@ -51,6 +71,8 @@ const namespace = config.get("namespace");
 // This is an example, and it is unauthenticated.
 // It allows the user to specify the event (hook) and
 // the project ID (brigade-XXXXXXXXXXXXXXXX)
+// To learn more about Express.js apps, go here:
+//  https://expressjs.com
 app.post("/v1/webhook/:hook/:project", (req, res) => {
     const eventName = req.params.hook;
     const project = req.params.project;
@@ -79,5 +101,5 @@ app.get("/healthz", (req, res)=> {
 })
 // Start the server.
 http.createServer(app).listen(config.get('port'), () => {
-    console.log("Running")
+    console.log(`Running on ${config.get("ip")}:${config.get("port")}`)
 })

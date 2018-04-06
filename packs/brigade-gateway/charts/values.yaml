@@ -1,6 +1,17 @@
-# Default values for chart.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+
+# The values specified here will be passed in as environment variables
+# to your application. Note that the following environment variables are
+# automatically set for you by the environment:
+# - GATEWAY_PORT (set to service.internalPort)
+# - GATEWAY_NAMESPACE (set to the app's Kubernetes namespace)
+# - GATEWAY_NAMED (set to the name of this app)
+# - GATEWAY_IP (set to the IP of the pod)
+env:
+  - name: EXAMPLE
+    value: "hello world"
+
 replicaCount: 1
 image:
   repository: nginx
@@ -10,7 +21,7 @@ service:
   name: nginx
   type: ClusterIP
   externalPort: 80
-  internalPort: 80
+  internalPort: 8080
 ingress:
   enabled: false
   # Used to create an Ingress record.
