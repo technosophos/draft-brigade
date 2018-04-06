@@ -25,9 +25,12 @@ To begin using Brigade gateway scaffold, simply do this:
 ```console
 $ mkdir myGateway
 $ cd myGateway
-$ draft create --pack brigade-gateway
+$ draft create --pack github.com/technosophos/draft-brigade/packs/brigade-gateway
 $ # Edit index.js
 $ draft up
+$ # See your work in progress:
+$ draft connect
+$ curl $URL_FROM_CONNECT/healthz
 ```
 
 The `index.js` file is pre-configured for rapidly creating an HTTP/HTTPS Brigade gateway. Inside of the `index.js` file, you will find instructions for modifying it to suit your needs.
