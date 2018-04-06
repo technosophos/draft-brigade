@@ -7,6 +7,25 @@ const { Event } = require("./brigade-event")
 const app = express();
 app.use(bodyParser.raw({type: "*/*"}));
 
+/*  ==== OVERVIEW ====
+This is a  basic framework for a Node.js-based Brigade gateway.
+
+Brigade gateways work by transforming some trigger condition into
+a Brigade vent. This tool makes it easy to declare webhooks,
+and have a webhook trigger an event.
+
+There are two parts to this app:
+- CONFIGURATION: This controls what external data can be loaded
+  into this script. Following 12-Factor design, there is a preference
+  toward loading configuration through environment variables.
+- WEBHOOKS: This script contains an Express web app. To answer web
+  hooks, you typically need to create routes to answer HTTP POST
+  requests. The job of the request handler is to:
+  * Receive an HTTP POST request on a URI
+  * Translate that into an Event, and create that event
+  * Send back an acceptance notification (HTTP 200 with optional body)
+*/
+
 // ==== CONFIGURATION ====
 // To learn more about Convict, go here:
 //   https://github.com/mozilla/node-convict
@@ -42,7 +61,8 @@ app.post("/v1/webhook/:hook/:project", (req, res) => {
     // from there.
     brigEvent = new Event(namespace);
     brigEvent.create(eventName, project, payload).then(() => {
-        // At this point, we know the event was created.
+        // At this point, we know the event was created. So
+        // we send a trivial response.
         res.json({"status": "accepted"});
     }).catch((e) => {
         console.error(e);
@@ -51,7 +71,8 @@ app.post("/v1/webhook/:hook/:project", (req, res) => {
 });
 
 // ==== BOILERPLATE ====
-// Kubernetes health probe.
+// Kubernetes health probe. If you remove this, you will need to modify
+// the deployment.yaml in the chart.
 app.get("/healthz", (req, res)=> {
     res.send("OK");
 })
