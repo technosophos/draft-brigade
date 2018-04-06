@@ -27,6 +27,7 @@ There are two parts to this app:
 */
 
 // ==== CONFIGURATION ====
+// Configure what values we get from environment variables.
 // To learn more about Convict, go here:
 //   https://github.com/mozilla/node-convict
 var config = convict({

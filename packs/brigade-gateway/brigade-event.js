@@ -8,6 +8,14 @@ const kube = k8s.Config.defaultClient();
 /**
  * Event describes an event to be sent to Brigade.
  * 
+ * Events are created as Kubernetes secrets with a specific set of labels.
+ * The Brigade controller watches for these events, and creates new
+ * worker instances to handle them.
+ * 
+ * Event names are conventional. You can declare your own event name
+ * here, and then your `brigade.js` file can handle it by declareing
+ * `events.on("your_event_name"...)`
+ * 
  * @param string ns
  *   The Kubernetes namespace.
  */
@@ -83,8 +91,6 @@ exports.Event = function(ns) {
         })
     }
 }
-
-
 
 function b64enc(original) {
     return Buffer.from(original).toString("base64");

@@ -21,6 +21,14 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.internalPort }}
+          env:
+            - name: GATEWAY_PORT
+              value: {{ .Values.service.internalPort | quote }}
+            - name: GATEWAY_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
           livenessProbe:
             httpGet:
               path: /healthz
