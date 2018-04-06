@@ -38,7 +38,7 @@ spec:
               valueFrom:
                 fieldRef:
                   apiVersion: v1
-                  fieldPath: metadata.podIP
+                  fieldPath: status.podIP
             {{ range $var := .Values.env }}
             - name: {{ $var.name | quote }}
               value: {{ $var.value | quote }}
