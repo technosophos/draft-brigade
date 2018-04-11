@@ -85,6 +85,7 @@ exports.Event = function(ns) {
                 build_name: b64enc(buildName),
                 event_provider: b64enc(this.event_provider),
                 event_type: b64enc(hook),
+                project_id: b64enc(project),
                 payload: b64enc(payload)
             }
             if (this.script) {
