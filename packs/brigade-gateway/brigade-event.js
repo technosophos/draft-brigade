@@ -41,10 +41,16 @@ exports.Event = function(ns) {
      */
     this.script = "";
     this.log_level = "";
-    
+
+    /**
+     * The build ID. If this is blank (the suggested value) when `create()`
+     * is called, a ULID will be generated and stored on this field.
+     */
+    this.build_id = "";
+
     /**
      * Create this event inside of Kubernetes.
-     * 
+     *
      * @param string hook
      *   The event name (e.g. exec)
      * @param string project
@@ -56,8 +62,10 @@ exports.Event = function(ns) {
         // This is a guard to prevent us from creating
         // an event for a project that does not exist.
         return kube.readNamespacedSecret(project, this.namespace).then( () => {
-            let buildId = ulid.ulid().toLowerCase()
-            let buildName = `brigade-${buildId}`
+            if (!this.build_id) {
+              this.build_id = ulid.ulid().toLowerCase()
+            }
+            let buildName = `brigade-${this.build_id}`
             let secret = new k8s.V1Secret()
             secret.type = "brigade.sh/build"
             secret.metadata = {
@@ -65,7 +73,7 @@ exports.Event = function(ns) {
                 labels: {
                     component: "build",
                     heritage: "brigade",
-                    build: buildId,
+                    build: this.build_id,
                     project: project
                 }
             }
@@ -73,7 +81,7 @@ exports.Event = function(ns) {
                 // TODO: Do we let this info be passed in?
                 commit_id: b64enc(this.commit_id),
                 commit_ref: b64enc(this.commit_ref),
-                build_id: b64enc(buildId),
+                build_id: b64enc(this.build_id),
                 build_name: b64enc(buildName),
                 event_provider: b64enc(this.event_provider),
                 event_type: b64enc(hook),
