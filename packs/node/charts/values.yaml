@@ -4,10 +4,10 @@
 # The values specified here will be passed in as environment variables
 # to your application. Note that the following environment variables are
 # automatically set for you by the environment:
-# - GATEWAY_PORT (set to service.internalPort)
-# - GATEWAY_NAMESPACE (set to the app's Kubernetes namespace)
-# - GATEWAY_NAMED (set to the name of this app)
-# - GATEWAY_IP (set to the IP of the pod)
+# - NODE_APP_PORT (set to service.internalPort)
+# - NODE_APP_NAMESPACE (set to the app's Kubernetes namespace)
+# - NODE_APP_NAMED (set to the name of this app)
+# - NODE_APP_IP (set to the IP of the pod)
 env:
   - name: EXAMPLE
     value: "hello world"
