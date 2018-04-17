@@ -9,6 +9,7 @@
     "express": "^4.16.3"
   },
   "scripts": {
+    "preinstall": "mkdir ./src ./test && mv src_index.js src/index.js && mv src_hello.js src/hello.js && mv test_hello.js test/hellos.js",
     "start": "node src/index.js",
     "test": "mocha"
   },
