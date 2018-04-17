@@ -34,3 +34,7 @@ $ curl $URL_FROM_CONNECT/healthz
 ```
 
 The `index.js` file is pre-configured for rapidly creating an HTTP/HTTPS Brigade gateway. Inside of the `index.js` file, you will find instructions for modifying it to suit your needs.
+
+## Node Starter
+
+The `node` starter pack is an opinionated Node.js application.
