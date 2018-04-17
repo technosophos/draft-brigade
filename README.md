@@ -25,7 +25,7 @@ To begin using Brigade gateway scaffold, simply do this:
 ```console
 $ mkdir myGateway
 $ cd myGateway
-$ draft create --pack github.com/technosophos/draft-brigade/packs/brigade-gateway
+$ draft create --pack brigade-gateway
 $ # Edit index.js
 $ draft up
 $ # See your work in progress:
@@ -37,4 +37,15 @@ The `index.js` file is pre-configured for rapidly creating an HTTP/HTTPS Brigade
 
 ## Node Starter
 
-The `node` starter pack is an opinionated Node.js application.
+The `node` starter pack is an opinionated Node.js application. It has two purposes:
+
+1. Help Node.js developers get a running Kubernetes app in **less than two minutes**
+2. Serve as a pattern for other deep language packs
+
+To get started:
+
+```
+$ mkdir node-demo
+$ cd node-demo
+
+```
