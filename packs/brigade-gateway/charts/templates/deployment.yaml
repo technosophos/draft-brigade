@@ -9,6 +9,7 @@ metadata:
     heritage: {{ .Release.Service }}
     draft: {{ default "draft-app" .Values.draft }}
 spec:
+  serviceAccountName: {{ template "fullname" . }}
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:

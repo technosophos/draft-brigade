@@ -12,6 +12,9 @@ env:
   - name: EXAMPLE
     value: "hello world"
 
+rbac:
+  enabled: false
+
 replicaCount: 1
 image:
   repository: nginx

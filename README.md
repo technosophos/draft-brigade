@@ -47,5 +47,31 @@ To get started:
 ```
 $ mkdir node-demo
 $ cd node-demo
-
+$ draft install --app node-demo --pack brigade-node
+$ yarn install # or npm install or whatever you use
 ```
+
+At this point you should have a functional testable app.
+
+```console
+$ yarn test
+yarn run v1.3.2
+ mocha
+
+
+  hello
+    #world
+      ✓ should return 'hello world'
+    #boulder
+      ✓ should return 'hello boulder'
+
+
+  2 passing (6ms)
+
+✨  Done in 0.42s.
+```
+
+To run it, do `yarn start`, and it will start a webserver.
+
+To get going with the coding, edit `src/index.js` and build your app!
+
